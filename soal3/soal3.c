@@ -1,0 +1,13 @@
+#include<stdlib.h>
+#include<sys/types.h>
+#include<sys/stat.h>
+#include<sys/wait.h>
+#include<unistd.h>
+#include<wait.h>
+#include<stdio.h>
+#include<string.h>
+#include<dirent.h>
+#include<pthread.h>
+#include<limits.h>
+#include<unistd.h>
+#include<ctype.h>
