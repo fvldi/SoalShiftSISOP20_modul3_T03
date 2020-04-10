@@ -1,4 +1,3 @@
-//gcc -pthread -o soal3 soal3.c
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
