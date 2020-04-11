@@ -646,9 +646,9 @@ int main() {
 
 ![4a](/output/4a.png)
 
-## Soal  4a
+## Soal  4c
 
-Norland adalah seorang penjelajah terkenal. Pada suatu malam Norland menyusuri jalan setapak menuju ke sebuah gua dan mendapati tiga pilar yang pada setiap pilarnya ada sebuah batu berkilau yang tertancap. Batu itu berkilau di kegelapan dan setiap batunya memiliki warna yang berbeda.  
+**Batu ketiga** adalah Onyx. Batu mulia berwarna hitam mengkilat. Pecahkan           teka-teki berikut!  
 
 Norland mendapati ada sebuah teka-teki yang tertulis di setiap pilar. Untuk dapat            mengambil batu mulia di suatu pilar, Ia harus memecahkan teka-teki yang ada di             pilar tersebut. Norland menghampiri setiap pilar secara bergantian.  
 
