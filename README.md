@@ -433,6 +433,12 @@ int main(int argc, char *argv[]) {
 ```
 
 ### Output :
+- ```-f``` :  
+Sebelum run :  
+![-f](/output/fsebelum.png)  
+
+    Setelah run :  
+    ![-f](/output/fsetelah.png)
 
 ## Soal  4
 ```
