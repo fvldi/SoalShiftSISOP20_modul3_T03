@@ -19,13 +19,21 @@
 #define D 3
 #define STAR 4
 
-int isDirectory(const char *path) {
+/*
+isDirectory -> cek apakah path yang dimasukkan
+adalah path ke directory atau file
+*/
+int isDirectory(const char *path) { 
    struct stat statbuf;
    if (stat(path, &statbuf) != 0)
        return FALSE;
    return S_ISDIR(statbuf.st_mode);
 }
 
+/*
+checkAllFileExist -> cek apakah
+semua path file yang dimasukkan ada
+*/
 int checkAllFileExist(int argc, char *argv[]) {
     int i;
     char curr_dirr[1000];
@@ -44,6 +52,10 @@ int checkAllFileExist(int argc, char *argv[]) {
     return TRUE;
 }
 
+/*
+get_filename_ext -> untuk mendapat ekstensi
+dari suatu file
+*/
 const char *get_filename_ext(const char *filename) {
     const char *dot = strrchr(filename, '.');
     if(!dot || dot == filename) return "";
@@ -51,6 +63,9 @@ const char *get_filename_ext(const char *filename) {
     return dot;
 }
 
+/*
+checkMainArg -> checking argumen yang dimasukkan ke program
+*/
 int checkMainArg(int argc, char *argv[]) {
     if(argc < 2)
         return FALSE;
@@ -68,6 +83,9 @@ int checkMainArg(int argc, char *argv[]) {
     return FALSE;
 }
 
+/*
+moveFileToNewPath -> memindahkan file ke path baru
+*/
 void moveFileToNewPath(char *source, char *dest) {
     FILE *fp1, *fp2;
     int ch;
@@ -83,6 +101,9 @@ void moveFileToNewPath(char *source, char *dest) {
     remove(source);
 }
 
+/*
+moveFile -> fungsi untuk memindahkan ke suatu directory
+*/
 void *moveFile( void *ptr )
 {
     char *param = (char *)ptr;
@@ -114,6 +135,7 @@ void *moveFile( void *ptr )
 
     moveFileToNewPath(param, new_path);
 }
+
 
 int main(int argc, char *argv[]) {
     int check = checkMainArg(argc, argv), i = 0, iret[10000], let = 1;
