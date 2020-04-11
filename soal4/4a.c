@@ -6,12 +6,19 @@
 #include <unistd.h>
 #include <string.h>
 
+/*
+matA -> Berisi matriks pertama berukuran 4x2
+*/
 int matA[4][2] = {
   {1, 1},
   {2, 2},
   {1, 1},
   {2, 2}
 };
+
+/*
+matB -> Berisi matriks kedua berukuran 2x5
+*/
 int matB[2][5] = {
   {1, 4, 1, 2, 1},
   {1, 2, 1, 4, 1}
