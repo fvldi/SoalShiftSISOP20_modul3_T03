@@ -732,3 +732,7 @@ dup2(fd[0], 0);
 ### Output :
 
 ![4c](/output/4c.png)
+
+## Kendala :
+
+1. Kurangnya pemahaman kami dalam mengerjakan soal 1, 2, dan 4b
