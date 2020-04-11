@@ -554,6 +554,176 @@ int main() {
 
 ### Penjelasan :
 
+- Program ini memiliki beberapa header diantaranya :  
 
+```c
+#include <stdio.h>
+#include <pthread.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+```
 
+- ```matA``` Berisi matriks pertama berukuran 4x2
+
+```c
+int matA[4][2] = {
+  {1, 1},
+  {2, 2},
+  {1, 1},
+  {2, 2}
+};
+```
+
+- ```matB``` Berisi matriks kedua berukuran 2x5
+
+```c
+int matB[2][5] = {
+  {1, 4, 1, 2, 1},
+  {1, 2, 1, 4, 1}
+};
+```
+- ```int matC[4][5];``` Akan berisi hasil dari perkalian kedua matriks diatas
+- ```*kali``` berisi fungsi untuk mengalikan kedua matriks
+
+```c
+void *kali(void* arg) {
+  int i = ((struct args*)arg)->i;
+  int j = ((struct args*)arg)->j;
+
+  for (int k = 0; k < 2; k++) {
+    matC[i][j] += matA[i][k] * matB[k][j];
+  }
+}
+```
+
+- Lalu di main function
+
+```c
+int main() {
+
+  pthread_t tid[4][5];
+
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 5; j++) {
+      struct args *index = (struct args *)malloc(sizeof(struct args));
+      index->i = i;
+      index->j = j;
+      pthread_create(&tid[i][j], NULL, &kali, (void *)index);
+    }
+  }
+
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 5; j++) {
+      pthread_join(tid[i][j], NULL);
+    }
+  }
+
+  printf("Matriks :\n");
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 5; j++) {
+      printf("%4d", matC[i][j]);
+    }
+    printf("\n");
+  }
+
+  key_t key = 1337;
+  int *value;
+
+  int shmid = shmget(key, sizeof(matC), IPC_CREAT | 0666);
+  value = shmat(shmid, NULL, 0);
+
+  int* p = (int *)value;
+
+  memcpy(p, matC, 80);
+
+  shmdt(value);
+}
+```
 ### Output :
+
+![4a](/output/4a.png)
+
+## Soal  4a
+
+Norland adalah seorang penjelajah terkenal. Pada suatu malam Norland menyusuri jalan setapak menuju ke sebuah gua dan mendapati tiga pilar yang pada setiap pilarnya ada sebuah batu berkilau yang tertancap. Batu itu berkilau di kegelapan dan setiap batunya memiliki warna yang berbeda.  
+
+Norland mendapati ada sebuah teka-teki yang tertulis di setiap pilar. Untuk dapat            mengambil batu mulia di suatu pilar, Ia harus memecahkan teka-teki yang ada di             pilar tersebut. Norland menghampiri setiap pilar secara bergantian.  
+
+**Batu mulia pertama​**. Emerald. Batu mulia yang berwarna hijau mengkilat. Pada            batu itu Ia menemukan sebuah kalimat petunjuk. Ada sebuah teka-teki yang berisi:   
+
+1. Buatlah program C dengan nama "​4a.c​", yang berisi program untuk           melakukan perkalian matriks. Ukuran matriks pertama adalah ​4x2​, dan         matriks kedua ​2x5​. Isi dari matriks didefinisikan ​di dalam kodingan. Matriks           nantinya akan berisi angka 1-20 (​tidak perlu​ dibuat filter angka). 
+2. Tampilkan matriks hasil perkalian tadi ke layar.  
+
+### Source Code :
+
+````c
+#include<stdio.h>
+#include<stdlib.h>
+#include<unistd.h>
+#include<sys/types.h>
+#include<string.h>
+#include<sys/wait.h>
+
+int main() {
+  int fd[2];
+
+  pid_t pid;
+
+  pipe(fd);
+
+  pid = fork();
+  if (pid == 0) {
+    dup2(fd[1], 1);
+    close(fd[0]);
+    char *argv[] = {"ls", NULL};
+    execv("/bin/ls", argv);
+  }
+  while(wait(NULL) > 0);
+
+  dup2(fd[0], 0);
+  close(fd[1]);
+  char *argv[] = {"wc", "-l", NULL};
+  execv("/usr/bin/wc", argv);
+
+}
+````
+
+### Penjelasan :
+
+- Program ini memiliki beberapa header diantaranya :  
+
+```c
+#include<stdio.h>
+#include<stdlib.h>
+#include<unistd.h>
+#include<sys/types.h>
+#include<string.h>
+#include<sys/wait.h>
+```
+
+- Fungsi berikut menjalankan perintah ```ls``` kemudian informasi tersebut di ***write*** oleh operator ```dup2(fd[1], 1)```
+
+```c
+pid = fork();
+  if (pid == 0) {
+    dup2(fd[1], 1);
+    close(fd[0]);
+    char *argv[] = {"ls", NULL};
+    execv("/bin/ls", argv);
+  }
+```
+
+- Operator ```dup2(fd[0], 0)``` pada program berikut membaca (read) informasi dari perintah sebelumnya yaitu ```ls``` untuk kemudian di pakai untuk menjalankan perintah ```wc -l```
+
+```c
+dup2(fd[0], 0);
+  close(fd[1]);
+  char *argv[] = {"wc", "-l", NULL};
+  execv("/usr/bin/wc", argv);
+```
+### Output :
+
+![4c](/output/4c.png)
