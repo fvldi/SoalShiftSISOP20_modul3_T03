@@ -646,16 +646,12 @@ int main() {
 
 ![4a](/output/4a.png)
 
-## Soal  4a
+## Soal  4c 
 
-Norland adalah seorang penjelajah terkenal. Pada suatu malam Norland menyusuri jalan setapak menuju ke sebuah gua dan mendapati tiga pilar yang pada setiap pilarnya ada sebuah batu berkilau yang tertancap. Batu itu berkilau di kegelapan dan setiap batunya memiliki warna yang berbeda.  
+**Batu ketiga** adalah Onyx. Batu mulia berwarna hitam mengkilat. Pecahkan           teka-teki berikut!   
 
-Norland mendapati ada sebuah teka-teki yang tertulis di setiap pilar. Untuk dapat            mengambil batu mulia di suatu pilar, Ia harus memecahkan teka-teki yang ada di             pilar tersebut. Norland menghampiri setiap pilar secara bergantian.  
-
-**Batu mulia pertama​**. Emerald. Batu mulia yang berwarna hijau mengkilat. Pada            batu itu Ia menemukan sebuah kalimat petunjuk. Ada sebuah teka-teki yang berisi:   
-
-1. Buatlah program C dengan nama "​4a.c​", yang berisi program untuk           melakukan perkalian matriks. Ukuran matriks pertama adalah ​4x2​, dan         matriks kedua ​2x5​. Isi dari matriks didefinisikan ​di dalam kodingan. Matriks           nantinya akan berisi angka 1-20 (​tidak perlu​ dibuat filter angka). 
-2. Tampilkan matriks hasil perkalian tadi ke layar.  
+1. Buatlah program C ketiga dengan nama "​4c.c​". Program ini tidak           memiliki hubungan terhadap program yang lalu.  
+2. Pada program ini, Norland diminta mengetahui jumlah file dan          folder di direktori saat ini dengan command "​ls|wc-l​". Karena sudah belajar              IPC, Norland mengerjakannya dengan semangat. (​Catatan!​ : Harus menggunakan IPC Pipes)   
 
 ### Source Code :
 
@@ -702,6 +698,15 @@ int main() {
 #include<sys/types.h>
 #include<string.h>
 #include<sys/wait.h>
+```
+- Fungsi deklarasi awal dan fungsi pipe yang diperlukan
+
+```c
+int fd[2];
+
+pid_t pid;
+
+pipe(fd);
 ```
 
 - Fungsi berikut menjalankan perintah ```ls``` kemudian informasi tersebut di ***write*** oleh operator ```dup2(fd[1], 1)```
